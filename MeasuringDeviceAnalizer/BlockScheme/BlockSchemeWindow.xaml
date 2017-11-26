@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="BlockScheme.BlockSchemeWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:BlockScheme"
+	Title="Структурна схема"
+	Icon="/Resources/flow-chart.png"
+	Height="500"
+	Width="750"
+	x:Name="BSWindow"
+	Loaded="BSWindow_Loaded">
+	<Window.Resources>
+		<Style
+			x:Key="pathStyle"
+			TargetType="Path">
+			<Setter
+				Property="Stroke"
+				Value="Black" />
+			<Setter
+				Property="StrokeThickness"
+				Value="1" />
+			<Setter
+				Property="Fill"
+				Value="Transparent" />
+			<Setter
+				Property="HorizontalAlignment"
+				Value="Center" />
+		</Style>
+	</Window.Resources>
+	<!-- This will inform the Window which handlers to call,
+	when testing for the Open and Save commands. -->
+	<Window.CommandBindings>
+		<CommandBinding
+			Command="ApplicationCommands.Open"
+			Executed="OpenCmdExecuted"
+			CanExecute="OpenCmdCanExecute" />
+		<CommandBinding
+			Command="ApplicationCommands.Save"
+			Executed="SaveCmdExecuted"
+			CanExecute="SaveCmdCanExecute" />
+	</Window.CommandBindings>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="Auto"></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<ToolBarTray
+			Orientation="Horizontal"
+			IsLocked="True"
+			Grid.Row="0">
+			<ToolBar>
+				<Button
+					Name="cmdOpen"
+					ToolTip="Відкрити"
+					Command="ApplicationCommands.Open"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/OpenFolder.png" />
+				</Button>
+				<Button
+					Name="cmdSave"
+					ToolTip="Зберегти"
+					Command="ApplicationCommands.Save"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/Save.png" />
+				</Button>
+			</ToolBar>
+			<ToolBar>
+				<RadioButton
+					Name="cmdSelectMove"
+					ToolTip="Вибрати"
+					GroupName="schemeDrawing"
+					IsChecked="True"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/cursor.png"
+						Width="20"
+						Height="20" />
+				</RadioButton>
+				<RadioButton
+					Name="cmdBlockOneWay"
+					ToolTip="Однонаправлений"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Path
+						Style="{StaticResource pathStyle}">
+						<Path.Data>
+							<GeometryGroup>
+								<RectangleGeometry
+									Rect="1,1 17,17" />
+							</GeometryGroup>
+						</Path.Data>
+					</Path>
+				</RadioButton>
+				<RadioButton
+					Name="cmdBlockTwoWays"
+					ToolTip="Двонаправлений"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Path
+						Style="{StaticResource pathStyle}">
+						<Path.Data>
+							<GeometryGroup>
+								<RectangleGeometry
+									Rect="1,1 17,17" />
+								<LineGeometry
+									StartPoint="1,10"
+									EndPoint="17,10" />
+							</GeometryGroup>
+						</Path.Data>
+					</Path>
+				</RadioButton>
+				<RadioButton
+					Name="cmdBlockSum"
+					ToolTip="Суматор"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/sum.png" />
+				</RadioButton>
+				<RadioButton
+					Name="cmdBlockBidirectCounter"
+					ToolTip="Реверсивний лічильник"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/counter.png" />
+				</RadioButton>
+				<RadioButton
+					Name="cmdBlockSwitch"
+					ToolTip="Перемикач"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Path
+						Style="{StaticResource pathStyle}">
+						<Path.Data>
+							<GeometryGroup>
+								<RectangleGeometry
+									Rect="1,1 17,17" />
+								<LineGeometry
+									StartPoint="1,10"
+									EndPoint="5,10" />
+								<LineGeometry
+									StartPoint="5,10"
+									EndPoint="12,5" />
+								<LineGeometry
+									StartPoint="12,10"
+									EndPoint="17,10" />
+							</GeometryGroup>
+						</Path.Data>
+					</Path>
+				</RadioButton>
+				<RadioButton
+					Name="cmdConnection"
+					ToolTip="З'єднання"
+					GroupName="schemeDrawing"
+					Width="25"
+					Height="25">
+					<Path
+						Style="{StaticResource pathStyle}">
+						<Path.Data>
+							<GeometryGroup>
+								<LineGeometry
+									StartPoint="1,2"
+									EndPoint="9,2" />
+								<LineGeometry
+									StartPoint="9,2"
+									EndPoint="9,16" />
+								<LineGeometry
+									StartPoint="9,16"
+									EndPoint="17,16" />
+							</GeometryGroup>
+						</Path.Data>
+					</Path>
+				</RadioButton>
+				<RadioButton
+					Name="cmdDelete"
+					ToolTip="Видалити"
+					GroupName="schemeDrawing"
+					Checked="cmdDelete_Checked"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/delete.png" />
+				</RadioButton>
+				<Button
+					Name="cmdClearAll"
+					ToolTip="Видалити все"
+					Click="CmdClearAll_Click"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/clear_all.png" />
+				</Button>
+			</ToolBar>
+			<ToolBar>
+				<Button
+					Name="cmdRun"
+					ToolTip="Розрахувати"
+					Click="CmdRun_Click"
+					Width="25"
+					Height="25">
+					<Image
+						Source="/Resources/run.png" />
+				</Button>
+			</ToolBar>
+		</ToolBarTray>
+		<Border
+			Grid.Row="1"
+			Margin="3"
+			BorderBrush="SteelBlue"
+			BorderThickness="1">
+			<ScrollViewer
+				Name="drawingSurfaceScrollViewer"
+				Background="Transparent"
+				HorizontalScrollBarVisibility="Visible"
+				VerticalScrollBarVisibility="Visible">
+				<local:DrawingCanvas
+					x:Name="drawingSurface"
+					Background="White"
+					ClipToBounds="True"
+					VirtualizingStackPanel.IsVirtualizing="True"
+					VirtualizingStackPanel.VirtualizationMode="Recycling"
+					MouseLeftButtonDown="drawingSurface_MouseLeftButtonDown"
+					MouseLeftButtonUp="drawingSurface_MouseLeftButtonUp"
+					MouseMove="drawingSurface_MouseMove"
+					MouseRightButtonDown="drawingSurface_MouseRightButtonDown"></local:DrawingCanvas>
+			</ScrollViewer>
+		</Border>
+	</Grid>
+</Window>
